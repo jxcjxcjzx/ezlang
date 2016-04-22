@@ -1,7 +1,0 @@
-foo = class {
-    foo(bar, baz) {
-        'true'
-    }
-}
-
-"true"
