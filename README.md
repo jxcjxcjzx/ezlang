@@ -27,6 +27,11 @@ npm install --save ezlang
 var ezlang = require('ezlang')
 ```
 
+## Todo
+
+ * Add `"!" expr`.
+ * Handle positives and negatives correctly (`expr:? ("+" | "-") expr`)
+
 ## Author
 
 © 2016 tleb <tleb@openmailbox.org> (https://github.com/tleb)
