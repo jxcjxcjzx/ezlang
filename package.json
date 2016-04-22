@@ -10,9 +10,8 @@
     "nodemon": "^1.9.1"
   },
   "scripts": {
-    "watch": "nodemon -w src -i generated.js -e js,ne,lang -x \"nearleyc src/grammar.ne -o src/generated.js && node\" src/index.js",
-    "clean": "rm src/generated.js",
-    "build": "nearleyc src/grammar.ne -o src/generated.js"
+    "watch": "nodemon -w src -i src/parser/grammar.js -e js,ne,lang -x \"nearleyc src/parser/grammar.ne -o src/parser/grammar.js && node\" -q src/index.js",
+    "build": "nearleyc src/parser/grammar.ne -o src/parser/grammar.js"
   },
   "author": "tleb",
   "license": "MIT",
