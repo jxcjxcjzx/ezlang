@@ -2,7 +2,7 @@
   "name": "ezlang",
   "version": "1.0.0",
   "description": "A simpler programming language",
-  "main": "index.js",
+  "main": "src/index.js",
   "dependencies": {
     "nearley": "^2.4.1"
   },
@@ -10,9 +10,9 @@
     "nodemon": "^1.9.1"
   },
   "scripts": {
-    "watch": "nodemon -w grammar.ne -w index.js -w grammar.js -w input.lang -e ne,js,lang -x \"nearleyc ./grammar.ne -o ./generated.js && node\" index.js",
-    "clean": "rm ./build/grammar.js",
-    "build": "npm run clean && nearleyc ./grammar.ne -o ./generated.js"
+    "watch": "nodemon -w src -i generated.js -e js,ne,lang -x \"nearleyc src/grammar.ne -o src/generated.js && node\" src/index.js",
+    "clean": "rm src/generated.js",
+    "build": "nearleyc src/grammar.ne -o src/generated.js"
   },
   "author": "tleb",
   "license": "MIT",
