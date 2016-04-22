@@ -13,6 +13,8 @@
 
 > A simpler programming language
 
+**WIP : ** do not use it, nothing is near being finished.
+
 ## Installation
 
 ```shell
