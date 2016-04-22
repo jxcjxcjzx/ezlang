@@ -27,6 +27,8 @@ module.exports = {
     
     int(d) { return parseInt(d[0].join(''), 10) },
     
+    intNeg(d) { return -d[1] },
+    
     null(d) { return { type: 'null' } },
     
     id(d) {

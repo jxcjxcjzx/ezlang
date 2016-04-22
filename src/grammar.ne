@@ -30,8 +30,10 @@ method    -> id _ argList _ curlyBlock      {% g.method %}
 argList   -> "(" _ id:? ("," _ id):* ")"    {% g.argList %}
 
 primitive -> int      {% id %}
+           | intNeg   {% id %}
            | str      {% id %}
 int       -> [0-9]:+  {% g.int %}
+intNeg    -> "-" int  {% g.intNeg %}
 str       -> dqstring {% id %}
            | sqstring {% id %}
 
