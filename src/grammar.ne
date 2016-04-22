@@ -10,7 +10,7 @@ var g = require('./grammar')
 
 
 program -> _ blocks _      {% g.program %}
-blocks  -> block           {% g.uniqueBlock %}
+blocks  -> block           {% id %}
          | blocks __ block {% g.blocks %}
 block   -> expr            {% id %}
          | stmt            {% id %}
@@ -25,26 +25,23 @@ expr      -> primitive        {% id %}
            | "(" _ expr _ ")" {% g.parenExpr %}
 id        -> [a-zA-Z]:+       {% g.id %}
 
-class     -> "class" _ "{" _ method:* _ "}"                {% g.class %}
-method    -> id _ "(" _ id:? ("," _ id):* ")" _ curlyBlock {% g.method %}
+class     -> "class" _ "{" _ method:* _ "}" {% g.class %}
+method    -> id _ argList _ curlyBlock      {% g.method %}
+argList   -> "(" _ id:? ("," _ id):* ")"    {% g.argList %}
 
-primitive -> int              {% id %}
-           | str              {% id %}
-int       -> [0-9]:+          {% g.int %}
-str       -> dqstring         {% id %}
-           | sqstring         {% id %}
-# true, false and null handled by the id postprocessor
-
-
+primitive -> int      {% id %}
+           | str      {% id %}
+int       -> [0-9]:+  {% g.int %}
+str       -> dqstring {% id %}
+           | sqstring {% id %}
 
 
-stmt         -> ifstmt                        {% id %}
-              | whilestmt                     {% id %}
-              | assignment                    {% id %}
-              | addition                      {% id %}
-              | substraction                  {% id %}
-ifstmt       -> "if" __ expr __ curlyBlock    {% g.if %}
-whilestmt    -> "while" __ expr __ curlyBlock {% g.while %}
-assignment   -> id _ "=" _ expr               {% g.assignment %}
-addition     -> expr _ "+" _ expr             {% g.addition %}
-substraction -> expr _ "-" _ expr             {% g.substraction %}
+
+
+
+stmt         -> ifOrWhile  {% id %}
+              | assignment {% id %}
+              | addOrSub   {% id %}
+ifOrWhile    -> ("if" | "while") __ expr __ curlyBlock {% g.ifOrWhile %}
+assignment   -> id _ "=" _ expr                        {% g.assignment %}
+addOrSub     -> expr _ ("+" | "-") _ expr              {% g.addOrSub %}

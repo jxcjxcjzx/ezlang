@@ -1,12 +1,6 @@
 module.exports = {
     
-    program(d) {
-        return d[1]
-    },
-    
-    uniqueBlock(d) {
-        return d[0]
-    },
+    program(d) { return d[1] },
     
     blocks(d) {
         if (!Array.isArray(d[0])) {
@@ -31,15 +25,9 @@ module.exports = {
         }
     },
     
-    int(d) {
-        return parseInt(d[0].join(''), 10)
-    },
+    int(d) { return parseInt(d[0].join(''), 10) },
     
-    null(d) {
-        return {
-            type: 'null'
-        }
-    },
+    null(d) { return { type: 'null' } },
     
     id(d) {
         var id = d[0].join('')
@@ -54,35 +42,32 @@ module.exports = {
         }
     },
     
-    parenExpr(d) {
-        return d[2]
-    },
+    parenExpr(d) { return d[2] },
     
-    class(d) {
+    class(d) { return { type: 'class', value: d[4] } },
+    
+    method(d) {
         return {
-            type: 'class',
+            id: d[0].value,
+            args: d[2],
             value: d[4],
         }
     },
     
-    method(d) {
+    argList(d) {
         var args
         
-        if (d[4] === null) {
+        if (d[2] === null) {
             args = []
         } else {
-            args = [d[4].value]
+            args = [d[2].value]
             
-            d[5].forEach(function (value) {
+            d[3].forEach(function (value) {
                 args.push(value[2].value)
             })
         }
         
-        return {
-            id: d[0].value,
-            args: args,
-            value: d[8],
-        }
+        return args
     },
     
     if(d) {
@@ -101,6 +86,16 @@ module.exports = {
         }
     },
     
+    ifOrWhile(d) {
+        var type = d[0] === 'if' ? 'if' : 'while'
+        
+        return {
+            type:      type,
+            condition: d[2],
+            value:     d[6],
+        }
+    },
+    
     assignment(d) {
         return {
             type:  'assign',
@@ -109,17 +104,11 @@ module.exports = {
         }
     },
     
-    addition(d) {
+    addOrSub(d) {
+        var type = d[2] === '+' ? 'addition' : 'substraction'
+        
         return {
-            type:   'addition',
-            value1: d[0],
-            value2: d[4],
-        }
-    },
-    
-    substraction(d) {
-        return {
-            type:   'substraction',
+            type: type,
             value1: d[0],
             value2: d[4],
         }
