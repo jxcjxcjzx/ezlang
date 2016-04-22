@@ -1,0 +1,35 @@
+{
+  "name": "ezlang",
+  "version": "1.0.0",
+  "description": "A simpler programming language",
+  "main": "index.js",
+  "dependencies": {
+    "alphabet": "^1.0.0",
+    "arguments-to-array": "^1.0.0",
+    "escape-string-regexp": "^1.0.5",
+    "ll.js": "^1.0.2",
+    "nearley": "^2.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  },
+  "scripts": {
+    "watch": "nodemon -w grammar.ne -w index.js -w grammar.js -w input.lang -e ne,js,lang -x \"nearleyc ./grammar.ne -o ./generated.js && node\" index.js",
+    "clean": "rm ./build/grammar.js",
+    "build": "npm run clean && nearleyc ./grammar.ne -o ./generated.js"
+  },
+  "author": "tleb",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tleb/ezlang.git"
+  },
+  "keywords": [
+    "programming",
+    "language"
+  ],
+  "bugs": {
+    "url": "https://github.com/tleb/ezlang/issues"
+  },
+  "homepage": "https://github.com/tleb/ezlang#readme"
+}
