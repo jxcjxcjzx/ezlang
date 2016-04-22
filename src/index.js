@@ -1,12 +1,14 @@
-var nearley = require('nearley')
-var grammar = require('./generated')
-var d       = function (data) {
-    console.log(require('util').inspect(data, false, null))
+var parser = require('./parser')
+var input  = require('fs').readFileSync(__dirname + '/input.lang').toString()
+function d(data) {
+    console.log(require('util').inspect(data, {
+        showHidden: false,
+        depth: null,
+        colors: true,
+        customInspect: true,
+    }))
 }
 
-var parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart)
-var input  = require('fs').readFileSync(__dirname + '/input.lang').toString()
+var ast = parser(input)
 
-parser.feed(input)
-
-d(parser.results)
+d(ast)

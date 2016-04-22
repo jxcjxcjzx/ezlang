@@ -2,7 +2,7 @@
 @builtin "string.ne"
 
 @{%
-var g = require('./grammar')
+var g = require('./postprocessors')
 %}
 
 

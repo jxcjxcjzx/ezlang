@@ -21,7 +21,7 @@ function $(o) {
 }
 
 
-var g = require('./grammar')
+var g = require('./postprocessors')
 var grammar = {
     ParserRules: [
     {"name": "_$ebnf$1", "symbols": []},
