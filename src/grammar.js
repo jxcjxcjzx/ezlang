@@ -19,11 +19,20 @@ module.exports = {
     },
     
     curlyBlock(d) {
-        return d[2]
+        var res = d[2]
+        
+        if (Array.isArray(res)) {
+            return res
+        }
+        
+        var type = typeof res
+        if (type === 'string' || type === 'number' || type === 'object') {
+            return [res]
+        }
     },
     
     int(d) {
-        return parseInt(d[0], 10)
+        return parseInt(d[0].join(''), 10)
     },
     
     null(d) {
