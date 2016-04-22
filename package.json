@@ -4,10 +4,6 @@
   "description": "A simpler programming language",
   "main": "index.js",
   "dependencies": {
-    "alphabet": "^1.0.0",
-    "arguments-to-array": "^1.0.0",
-    "escape-string-regexp": "^1.0.5",
-    "ll.js": "^1.0.2",
     "nearley": "^2.4.1"
   },
   "devDependencies": {
