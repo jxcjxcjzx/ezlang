@@ -5,10 +5,14 @@ module.exports = {
     },
     
     uniqueBlock(d) {
-        return d
+        return d[0]
     },
     
     blocks(d) {
+        if (!Array.isArray(d[0])) {
+            d[0] = [d[0]]
+        }
+        
         d[0].push(d[3])
         
         return d[0]
@@ -91,7 +95,7 @@ module.exports = {
     assignment(d) {
         return {
             type:  'assign',
-            id:    d[0],
+            id:    d[0].value,
             value: d[4],
         }
     },

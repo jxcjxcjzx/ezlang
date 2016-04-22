@@ -5,9 +5,8 @@ var d       = function (data) {
 }
 
 var parser = new nearley.Parser(grammar.ParserRules, grammar.ParserStart)
-var input  = require('fs').readFileSync('./input.lang').toString()
+var input  = require('fs').readFileSync(__dirname + '/input.lang').toString()
 
 parser.feed(input)
 
-d(input)
 d(parser.results)
