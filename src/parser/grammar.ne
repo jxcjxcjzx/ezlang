@@ -30,6 +30,7 @@ expr    -> id         {% g.expr %}
          | nul        {% g.expr %}
          | methodCall {% g.expr %}
          | closure    {% g.expr %}
+         | funcCall   {% g.expr %}
 comment -> "#" [^\n]:*                             {% g.comment %}
 if      -> "if" __ expr __ stmts elseif:* else:?   {% g.if_ %}
 while   -> "while" __ expr __ stmts                {% g.while_ %}
@@ -49,6 +50,7 @@ bool       -> "true"                  {% g.boolTrue %}
 nul        -> "null"                  {% g.null_ %}
 methodCall -> id "." id argCallList   {% g.methodCall %}
 closure    -> "func" argDefList stmts {% g.closure %}
+funcCall   -> id argCallList          {% g.funcCall %}
 
 
 

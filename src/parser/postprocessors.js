@@ -166,6 +166,10 @@ module.exports = {
         return { type: 'closure', args: d[1], value: d[2], location: l }
     },
     
+    funcCall(d, l, r) {
+        return { type: 'funcCall', id: d[0], args: d[1], location: l }
+    }
+    
     argList(d, l, r) {
         if (d[1] === null) {
             return []
