@@ -20,6 +20,7 @@ stmt  -> expr    {% id %}
        | assign  {% id %}
        | return  {% id %}
        | class   {% id %}
+       | func    {% id %}
 
 expr    -> id         {% g.expr %}
          | str        {% g.expr %}
@@ -29,7 +30,6 @@ expr    -> id         {% g.expr %}
          | nul        {% g.expr %}
          | methodCall {% g.expr %}
          | closure    {% g.expr %}
-         | func       {% g.expr %}
 comment -> "#" [^\n]:*                             {% g.comment %}
 if      -> "if" __ expr __ stmts elseif:* else:?   {% g.if_ %}
 while   -> "while" __ expr __ stmts                {% g.while_ %}
