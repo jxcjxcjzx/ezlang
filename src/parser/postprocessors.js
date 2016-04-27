@@ -1,119 +1,136 @@
+var reserved = [
+    'return',
+    'while',
+    'if',
+    'elseif',
+    'else',
+    'func',
+    'class',
+    'true',
+    'false',
+    'null',
+]
+
 module.exports = {
     
-    program(d) { return d[1] },
-    
-    blocks(d) {
-        if (!Array.isArray(d[0])) {
-            d[0] = [d[0]]
-        }
+    finalEmpty(d, l, r) {
         
-        d[0].push(d[3])
-        
-        return d[0]
     },
     
-    curlyBlock(d) {
-        var res = d[2]
+    final(d, l, r) {
         
-        if (Array.isArray(res)) {
-            return res
-        }
-        
-        var type = typeof res
-        if (type === 'string' || type === 'number' || type === 'object') {
-            return [res]
-        }
     },
     
-    int(d) { return parseInt(d[0].join(''), 10) },
-    
-    intNeg(d) { return -d[1] },
-    
-    null(d) { return { type: 'null' } },
-    
-    id(d) {
-        var id = d[0].join('')
+    stmtBlock(d, l, r) {
         
-        if (id === 'null')  return { type: 'null' }
-        if (id === 'true')  return true
-        if (id === 'false') return false
-        
-        return {
-            type: 'id',
-            value: id,
-        }
     },
     
-    parenExpr(d) { return d[2] },
-    
-    class(d) { return { type: 'class', value: d[4] } },
-    
-    method(d) {
-        return {
-            id: d[0].value,
-            args: d[2],
-            value: d[4],
-        }
+    stmt(d, l, r) {
+        
     },
     
-    argList(d) {
-        var args
+    stmtListSingle(d, l, r) {
         
-        if (d[2] === null) {
-            args = []
-        } else {
-            args = [d[2].value]
-            
-            d[3].forEach(function (value) {
-                args.push(value[2].value)
-            })
-        }
-        
-        return args
     },
     
-    if(d) {
-        return {
-            type:      'if',
-            condition: d[2],
-            value:     d[6],
+    stmtList(d, l, r) {
+        
+    },
+    
+    expr(d, l, r) {
+        
+    },
+    
+    comment(d, l, r) {
+        
+    },
+    
+    if_(d, l, r) {
+        
+    },
+    
+    while_(d, l, r) {
+        
+    },
+    
+    assign_(d, l, r) {
+        
+    },
+    
+    return_(d, l, r) {
+        
+    },
+    
+    class_(d, l, r) {
+        
+    },
+    
+    func(d, l, r) {
+        
+    },
+    
+    id(d, l, r) {
+        var res = d[0] + d[1].join('')
+        
+        if (reserved.includes(res)) {
+            return r
         }
     },
     
-    while(d) {
-        return {
-            type:      'while',
-            condition: d[2],
-            value:     d[6],
-        }
-    },
-    
-    ifOrWhile(d) {
-        var type = d[0] === 'if' ? 'if' : 'while'
+    str(d, l, r) {
         
-        return {
-            type:      type,
-            condition: d[2],
-            value:     d[6],
-        }
     },
     
-    assignment(d) {
-        return {
-            type:  'assign',
-            id:    d[0].value,
-            value: d[4],
-        }
-    },
-    
-    addOrSub(d) {
-        var type = d[2] === '+' ? 'addition' : 'substraction'
+    int(d, l, r) {
         
-        return {
-            type: type,
-            value1: d[0],
-            value2: d[4],
-        }
-    }
+    },
+    
+    float(d, l, r) {
+        
+    },
+    
+    boolTrue(d, l, r) {
+        
+    },
+    
+    boolFalse(d, l, r) {
+        
+    },
+    
+    null_(d, l, r) {
+        
+    },
+    
+    methodCall(d, l, r) {
+        
+    },
+    
+    closure(d, l, r) {
+        
+    },
+    
+    argCallList(d, l, r) {
+        
+    },
+    
+    argDefList(d, l, r) {
+        
+    },
+    
+    methodList(d, l, r) {
+        
+    },
+    
+    method(d, l, r) {
+        
+    },
+    
+    elseif(d, l, r) {
+        
+    },
+    
+    else_(d, l, r) {
+        
+    },
     
 }

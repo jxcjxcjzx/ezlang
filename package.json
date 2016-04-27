@@ -10,7 +10,7 @@
     "nodemon": "^1.9.1"
   },
   "scripts": {
-    "watch": "nodemon -w src -i src/parser/grammar.js -e js,ne,lang -x \"nearleyc src/parser/grammar.ne -o src/parser/grammar.js && node\" -q src/index.js",
+    "watch": "nodemon -w src -i src/parser/grammar.js -e js,ne,lang -x \"clear && nearleyc src/parser/grammar.ne -o src/parser/grammar.js && node\" -q src/index.js",
     "build": "nearleyc src/parser/grammar.ne -o src/parser/grammar.js"
   },
   "author": "tleb",
