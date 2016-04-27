@@ -48,7 +48,7 @@ bool       -> "true"                  {% g.boolTrue %}
             | "false"                 {% g.boolFalse %}
 nul        -> "null"                  {% g.null_ %}
 methodCall -> id "." id argCallList   {% g.methodCall %}
-closure    -> "func" argDefList stmts  {% g.closure %}
+closure    -> "func" argDefList stmts {% g.closure %}
 
 
 
@@ -58,6 +58,6 @@ closure    -> "func" argDefList stmts  {% g.closure %}
 argCallList -> "(" (expr ("," _ expr):*):? ")" {% g.argList %}
 argDefList  -> "(" (id ("," _ id):*):? ")"     {% g.argList %}
 methodList  -> "{" _ (method _):* "}"          {% g.methodList %}
-method      -> id argDefList _ stmts             {% g.method %}
+method      -> id argDefList _ stmts           {% g.method %}
 elseif      -> _ "elseif" __ expr __ stmts     {% g.elseif %}
 else        -> _ "else" __ stmts               {% g.else_ %}
