@@ -7,13 +7,13 @@
 
 final    -> null                     {% g.finalEmpty %}
           | stmtList                 {% g.final %}
-stmt     -> "{" _ (stmtList _):? "}" {% g.stmtBlock %}
-          | stmts                    {% g.stmt %}
+stmts    -> "{" _ (stmtList _):? "}" {% g.stmtsBlock %}
+          | stmt                     {% g.stmtsSingle %}
 stmtList -> stmt                     {% g.stmtListSingle %}
           | stmtList __ stmt         {% g.stmtList %}
 
 
-stmts -> expr    {% id %}
+stmt  -> expr    {% id %}
        | comment {% id %}
        | if      {% id %}
        | while   {% id %}
@@ -31,33 +31,33 @@ expr    -> id         {% g.expr %}
          | closure    {% g.expr %}
          | func       {% g.expr %}
 comment -> "#" [^\n]:*                           {% g.comment %}
-if      -> "if" __ expr __ stmt elseif:* else:?  {% g.if_ %}
-while   -> "while" __ expr __ stmt               {% g.while_ %}
+if      -> "if" __ expr __ stmts elseif:* else:? {% g.if_ %}
+while   -> "while" __ expr __ stmts              {% g.while_ %}
 assign  -> id _ "=" _ expr                       {% g.assign %}
-return  -> "return" __ stmt                      {% g.return_ %}
+return  -> "return" __ expr                      {% g.return_ %}
 class   -> "class" __ id (":" _ id):? methodList {% g.class_ %}
-func    -> "func" __ id argDefList stmt          {% g.func %}
+func    -> "func" __ id argDefList stmts         {% g.func %}
 
 
-id         -> [a-zA-Z] [a-zA-Z0-9_]:*      {% g.id %}
-str        -> dqstring                     {% g.str %}
-            | sqstring                     {% g.str %}
-int        -> [0-9]:+                      {% g.int %}
-float      -> int:? "." int                {% g.float %}
-bool       -> "true"                       {% g.boolTrue %}
-            | "false"                      {% g.boolFalse %}
-nul        -> "null"                       {% g.null_ %}
-methodCall -> id "." id argCallList        {% g.methodCall %}
-closure    -> "func" __ id argDefList stmt {% g.closure %}
+id         -> [a-zA-Z] [a-zA-Z0-9_]:* {% g.id %}
+str        -> dqstring                {% g.str %}
+            | sqstring                {% g.str %}
+int        -> [0-9]:+                 {% g.int %}
+float      -> int:? "." int           {% g.float %}
+bool       -> "true"                  {% g.boolTrue %}
+            | "false"                 {% g.boolFalse %}
+nul        -> "null"                  {% g.null_ %}
+methodCall -> id "." id argCallList   {% g.methodCall %}
+closure    -> "func" argDefList stmts  {% g.closure %}
 
 
 
 
 # HELPERS
 
-argCallList -> "(" (expr ("," _ expr):*):? ")" {% g.argCallList %}
-argDefList  -> "(" (id ("," _ id):*):? ")"     {% g.argDefList %}
+argCallList -> "(" (expr ("," _ expr):*):? ")" {% g.argList %}
+argDefList  -> "(" (id ("," _ id):*):? ")"     {% g.argList %}
 methodList  -> "{" _ (method _):* "}"          {% g.methodList %}
-method      -> id argDefList stmt              {% g.method %}
-elseif      -> _ "elseif" __ expr __ stmt      {% g.elseif %}
-else        -> _ "else" __ stmt                {% g.else %}
+method      -> id argDefList stmts             {% g.method %}
+elseif      -> _ "elseif" __ expr __ stmts     {% g.elseif %}
+else        -> _ "else" __ stmts               {% g.else_ %}
