@@ -30,13 +30,13 @@ expr    -> id         {% g.expr %}
          | methodCall {% g.expr %}
          | closure    {% g.expr %}
          | func       {% g.expr %}
-comment -> "#" [^\n]:*                           {% g.comment %}
-if      -> "if" __ expr __ stmts elseif:* else:? {% g.if_ %}
-while   -> "while" __ expr __ stmts              {% g.while_ %}
-assign  -> id _ "=" _ expr                       {% g.assign %}
-return  -> "return" __ expr                      {% g.return_ %}
-class   -> "class" __ id (":" _ id):? methodList {% g.class_ %}
-func    -> "func" __ id argDefList stmts         {% g.func %}
+comment -> "#" [^\n]:*                             {% g.comment %}
+if      -> "if" __ expr __ stmts elseif:* else:?   {% g.if_ %}
+while   -> "while" __ expr __ stmts                {% g.while_ %}
+assign  -> id _ "=" _ expr                         {% g.assign %}
+return  -> "return" __ expr                        {% g.return_ %}
+class   -> "class" __ id (":" _ id):? _ methodList {% g.class_ %}
+func    -> "func" __ id argDefList stmts           {% g.func %}
 
 
 id         -> [a-zA-Z] [a-zA-Z0-9_]:* {% g.id %}
@@ -58,6 +58,6 @@ closure    -> "func" argDefList stmts  {% g.closure %}
 argCallList -> "(" (expr ("," _ expr):*):? ")" {% g.argList %}
 argDefList  -> "(" (id ("," _ id):*):? ")"     {% g.argList %}
 methodList  -> "{" _ (method _):* "}"          {% g.methodList %}
-method      -> id argDefList stmts             {% g.method %}
+method      -> id argDefList _ stmts             {% g.method %}
 elseif      -> _ "elseif" __ expr __ stmts     {% g.elseif %}
 else        -> _ "else" __ stmts               {% g.else_ %}

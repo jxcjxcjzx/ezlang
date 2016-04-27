@@ -97,11 +97,23 @@ module.exports = {
     },
     
     class_(d, l, r) {
-        
+        return {
+            type: 'class',
+            id: d[2],
+            extends: d[3] === null ? null : d[3][2],
+            value: d[5],
+            location: l,
+        }
     },
     
     func(d, l, r) {
-        
+        return {
+            type: 'function',
+            id: d[2],
+            args: d[3],
+            value: d[4],
+            location: l,
+        }
     },
     
     id(d, l, r) {
